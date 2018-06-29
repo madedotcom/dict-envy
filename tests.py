@@ -53,7 +53,7 @@ class TestDictate:
         assert result == {'_a_b': 1}
 
 
-class  TestMerge:
+class TestMerge:
 
     @staticmethod
     def test_merge_single_same_key():
