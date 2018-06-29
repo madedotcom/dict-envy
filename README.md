@@ -27,6 +27,32 @@ and with a simple call you can have all of this:
 
 `depth` is how you regulate the depth of the returned dictionary.
 
+<details><summary>Couple gotchas</summary>
+
+### #1
+
+Sometimes you may encounter the following situation:
+
+```
+TERM_PROGRAM=Apple_Terminal
+TERM=xterm-256color
+```
+
+In which case, the return value would still be a dict, but `TERM` value would have an empty key like so:
+
+```python
+>>> import dictenvy
+>>> import pprint
+>>> env = dictenvy.dictate({'TERM': 'xterm-256color', 'TERM_PROGRAM': 'Apple_Terminal'}, depth=1))
+>>> pprint.pprint(env)
+{'term': {'': 'xterm-256color', 'program': 'Apple_Terminal'}}
+```
+
+### #2
+
+Variables that start with an underscore will be left alone.
+</details>
+
 ## Installation
 
 Use pip:
@@ -34,3 +60,7 @@ Use pip:
 ```shell
 $ pip install dict-envy
 ```
+
+## License
+
+MIT
