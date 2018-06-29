@@ -4,20 +4,24 @@ __version__ = '.'.join(map(str, VERSION))
 
 def merge(d1, d2):
     """Merges d2 into d1 without overwriting keys."""
-    ret = d1.copy()
-    for key in d2.keys():
-        if key in ret:
-            if isinstance(d2[key], dict) and isinstance(ret[key], dict):  # both sides are dicts
-                ret[key] = merge(ret[key], d2[key])
-            elif isinstance(d2[key], dict):  # left is scalar, right is a dict
-                ret[key] = merge({'': ret[key]}, d2[key])
-            elif isinstance(ret[key], dict):  # left is a dict, right is scalar
-                ret[key] = merge(ret[key], {'': d2[key]})
-            else:  # both are scalar
-                ret[key] = d2[key]
-        else:  # key was not found in ret
-            ret[key] = d2[key]
-    return ret
+    left = d1.copy()
+    right = d2.copy()
+    for key in right.keys():
+        if key in left:
+            left_is_dict = isinstance(left[key], dict)
+            right_is_dict = isinstance(right[key], dict)
+            
+            if left_is_dict and right_is_dict: 
+                left[key] = merge(left[key], right[key])
+            elif right_is_dict:
+                left[key] = merge({'': left[key]}, right[key])
+            elif left_is_dict:
+                left[key] = merge(left[key], {'': right[key]})
+            else:
+                left[key] = right[key]
+        else:
+            left[key] = right[key]
+    return left
 
 
 def _dict_from_key_path(segments, value):
