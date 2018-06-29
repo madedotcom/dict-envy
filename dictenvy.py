@@ -20,7 +20,7 @@ def merge(d1, d2):
     return ret
 
 
-def __dict_from_key_path(segments, value):
+def _dict_from_key_path(segments, value):
     """Creates a nested dict out of array of keys."""
     ret = {}
     for segment in reversed(segments):
@@ -59,6 +59,6 @@ def dictate(store, depth):
             ret[lkey] = value
             continue
         parts = lkey.split('_', depth)
-        dict_value = __dict_from_key_path(parts, value)
+        dict_value = _dict_from_key_path(parts, value)
         ret = merge(ret, dict_value)
     return ret
