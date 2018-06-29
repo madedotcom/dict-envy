@@ -6,11 +6,12 @@ def merge(d1, d2):
     """Merges d2 into d1 without overwriting keys."""
     left = d1.copy()
     right = d2.copy()
+
     for key in right.keys():
         if key in left:
             left_is_dict = isinstance(left[key], dict)
             right_is_dict = isinstance(right[key], dict)
-            
+
             if left_is_dict and right_is_dict: 
                 left[key] = merge(left[key], right[key])
             elif right_is_dict:
@@ -21,6 +22,7 @@ def merge(d1, d2):
                 left[key] = right[key]
         else:
             left[key] = right[key]
+
     return left
 
 
