@@ -7,15 +7,15 @@ def merge(d1, d2):
     ret = d1.copy()
     for key in d2.keys():
         if key in ret:
-            if isinstance(d2[key], dict) and isinstance(ret[key], dict):
+            if isinstance(d2[key], dict) and isinstance(ret[key], dict):  # both sides are dicts
                 ret[key] = merge(ret[key], d2[key])
-            elif isinstance(d2[key], dict):
+            elif isinstance(d2[key], dict):  # left is scalar, right is a dict
                 ret[key] = merge({'': ret[key]}, d2[key])
-            elif isinstance(ret[key], dict):
+            elif isinstance(ret[key], dict):  # left is a dict, right is scalar
                 ret[key] = merge(ret[key], {'': d2[key]})
-            else:
+            else:  # both are scalar
                 ret[key] = d2[key]
-        else:
+        else:  # key was not found in ret
             ret[key] = d2[key]
     return ret
 
